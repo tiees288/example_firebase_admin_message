@@ -21,6 +21,18 @@ async function sendFCMMessage(deviceToken, title, body, payloadData) {
       body: body,
     };
   }
+  message.apns = {
+    payload: {
+      aps: {
+        "content-available": 1,
+      },
+    },
+    headers: {
+      // "apns-push-type": "background", // This line prevents background notification
+      "apns-priority": "5",
+      "apns-topic": "com.chartmaker.social.bumpcall",
+    },
+  };
 
   try {
     const response = await admin.messaging().send(message);
